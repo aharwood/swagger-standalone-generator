@@ -1,15 +1,15 @@
-package com.wotifgroup.swaggerjsongenerator
+package com.wotifgroup.swaggerstandalonegenerator
 
 import com.sun.mirror.apt.AnnotationProcessorEnvironment
 import com.sun.mirror.apt.Filer
-import com.wotifgroup.swaggerjsongenerator.model.Resource
-import com.wotifgroup.swaggerjsongenerator.model.ResourcePath
+import com.wotifgroup.swaggerstandalonegenerator.model.Resource
+import com.wotifgroup.swaggerstandalonegenerator.model.ResourcePath
 import groovy.json.JsonSlurper
-import com.wotifgroup.swaggerjsongenerator.model.Operation
-import com.wotifgroup.swaggerjsongenerator.model.Parameter
-import com.wotifgroup.swaggerjsongenerator.model.ValueType
-import com.wotifgroup.swaggerjsongenerator.model.ParameterType
-import com.wotifgroup.swaggerjsongenerator.model.ErrorResponse
+import com.wotifgroup.swaggerstandalonegenerator.model.Operation
+import com.wotifgroup.swaggerstandalonegenerator.model.Parameter
+import com.wotifgroup.swaggerstandalonegenerator.model.ValueType
+import com.wotifgroup.swaggerstandalonegenerator.model.ParameterType
+import com.wotifgroup.swaggerstandalonegenerator.model.ErrorResponse
 
 /**
  * User: Adam

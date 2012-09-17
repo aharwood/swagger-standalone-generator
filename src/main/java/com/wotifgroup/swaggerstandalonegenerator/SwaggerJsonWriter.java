@@ -1,13 +1,13 @@
-package com.wotifgroup.swaggerjsongenerator;
+package com.wotifgroup.swaggerstandalonegenerator;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.sun.mirror.apt.AnnotationProcessorEnvironment;
 import com.sun.mirror.apt.Filer;
-import com.wotifgroup.swaggerjsongenerator.model.Operation;
-import com.wotifgroup.swaggerjsongenerator.model.Parameter;
-import com.wotifgroup.swaggerjsongenerator.model.ResourcePath;
-import com.wotifgroup.swaggerjsongenerator.model.Resource;
+import com.wotifgroup.swaggerstandalonegenerator.model.Operation;
+import com.wotifgroup.swaggerstandalonegenerator.model.Parameter;
+import com.wotifgroup.swaggerstandalonegenerator.model.ResourcePath;
+import com.wotifgroup.swaggerstandalonegenerator.model.Resource;
 import java.io.File;
 import java.io.IOException;
 import java.io.Writer;

@@ -1,4 +1,4 @@
-package com.wotifgroup.swaggerjsongenerator;
+package com.wotifgroup.swaggerstandalonegenerator;
 
 import com.sun.mirror.apt.AnnotationProcessor;
 import com.sun.mirror.apt.AnnotationProcessorEnvironment;
@@ -7,11 +7,11 @@ import com.sun.mirror.declaration.MethodDeclaration;
 import com.sun.mirror.declaration.TypeDeclaration;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
-import com.wotifgroup.swaggerjsongenerator.model.Operation;
-import com.wotifgroup.swaggerjsongenerator.model.PrimitiveType;
-import com.wotifgroup.swaggerjsongenerator.model.ResourcePath;
-import com.wotifgroup.swaggerjsongenerator.model.Resource;
-import com.wotifgroup.swaggerjsongenerator.model.ValueType;
+import com.wotifgroup.swaggerstandalonegenerator.model.Operation;
+import com.wotifgroup.swaggerstandalonegenerator.model.PrimitiveType;
+import com.wotifgroup.swaggerstandalonegenerator.model.ResourcePath;
+import com.wotifgroup.swaggerstandalonegenerator.model.Resource;
+import com.wotifgroup.swaggerstandalonegenerator.model.ValueType;
 import java.util.Set;
 import javax.ws.rs.Path;
 import org.apache.commons.lang3.ClassUtils;

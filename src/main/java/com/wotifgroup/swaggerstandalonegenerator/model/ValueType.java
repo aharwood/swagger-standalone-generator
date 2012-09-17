@@ -1,4 +1,4 @@
-package com.wotifgroup.swaggerjsongenerator.model;
+package com.wotifgroup.swaggerstandalonegenerator.model;
 
 /**
  * A type, either for input or output, in the swagger format.

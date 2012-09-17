@@ -1,4 +1,4 @@
-package com.wotifgroup.swaggerjsongenerator.model;
+package com.wotifgroup.swaggerstandalonegenerator.model;
 
 /**
  * User: Adam

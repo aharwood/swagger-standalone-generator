@@ -1,4 +1,4 @@
-package com.wotifgroup.swaggerjsongenerator;
+package com.wotifgroup.swaggerstandalonegenerator;
 
 import com.sun.mirror.apt.AnnotationProcessor;
 import com.sun.mirror.apt.AnnotationProcessorEnvironment;

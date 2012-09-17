@@ -1,6 +1,6 @@
-package com.wotifgroup.swaggerjsongenerator
+package com.wotifgroup.swaggerstandalonegenerator
 
-import com.wotifgroup.swaggerjsongenerator.model.ValueType
+import com.wotifgroup.swaggerstandalonegenerator.model.ValueType
 
 /**
  * User: Adam

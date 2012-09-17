@@ -1,4 +1,4 @@
-package com.wotifgroup.swaggerjsongenerator.model;
+package com.wotifgroup.swaggerstandalonegenerator.model;
 
 import java.util.ArrayList;
 import java.util.Collection;
