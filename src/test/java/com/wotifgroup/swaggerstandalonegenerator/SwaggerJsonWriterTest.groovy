@@ -139,8 +139,8 @@ class SwaggerJsonWriterTest extends GroovyTestCase {
     void testResourceDescriptionFileShouldContainOperationErrorResponses() {
         StringWriter outputWriter = new StringWriter()
         def environment = mockEnvironment([
-        "-AapiVersion=1.2.1": null,
-        "-AbasePath=http://wotsync.wotifgroup.com": null
+            "-AapiVersion=1.2.1": null,
+            "-AbasePath=http://wotsync.wotifgroup.com": null
         ], outputWriter)
         SwaggerJsonWriter writer = new SwaggerJsonWriter(environment)
         Resource resource = new Resource("/path0", "description 0")
@@ -158,6 +158,37 @@ class SwaggerJsonWriterTest extends GroovyTestCase {
 
         assertEquals(400, responseJson.apis[0].operations[0].errorResponses[1].code)
         assertEquals("Malformed request", responseJson.apis[0].operations[0].errorResponses[1].reason)
+    }
+
+    void testResourceDescriptionShouldContainModels() {
+        StringWriter outputWriter = new StringWriter()
+        def environment = mockEnvironment([
+            "-AapiVersion=1.2.1": null,
+            "-AbasePath=http://wotsync.wotifgroup.com": null
+        ], outputWriter)
+        SwaggerJsonWriter writer = new SwaggerJsonWriter(environment)
+        Resource resource = new Resource("/path0", "description 0")
+        ResourcePath path0 = resource.getResourcePath("/path0")
+        path0.setDescription("path description 0")
+        path0.addOperation(new Operation("GET", "getById", null, null, new ValueType("modelSample", ModelSample.class), [], []))
+        writer.write(resource)
+        def responseJson = new JsonSlurper().parseText(outputWriter.toString())
+
+        assertEquals("ModelSample", responseJson.models.ModelSample.id)
+        assertEquals("long", responseJson.models.ModelSample.properties.id.type)
+        assertEquals("boolean", responseJson.models.ModelSample.properties.enabled.type)
+        assertEquals("Date", responseJson.models.ModelSample.properties.created.type)
+        assertEquals("int", responseJson.models.ModelSample.properties.quantity.type)
+        assertEquals("Locale", responseJson.models.ModelSample.properties.locale.type)
+
+        assertEquals("string", responseJson.models.ModelSample.properties.status.type)
+        assertEquals("Model Status", responseJson.models.ModelSample.properties.status.description)
+        assertEquals("LIST", responseJson.models.ModelSample.properties.status.allowableValues.valueType)
+        assertEquals("pending", responseJson.models.ModelSample.properties.status.allowableValues.values[0])
+        assertEquals("accepted", responseJson.models.ModelSample.properties.status.allowableValues.values[1])
+
+        assertEquals("Array", responseJson.models.ModelSample.properties.nestedValues.type)
+        assertEquals("string", responseJson.models.ModelSample.properties.nestedValues.items.type)
     }
 
     void testOptionShouldReturnValueIfMatchingKey() {
