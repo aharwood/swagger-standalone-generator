@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.sun.mirror.apt.AnnotationProcessorEnvironment;
 import com.sun.mirror.apt.Filer;
+import com.wotifgroup.swaggerstandalonegenerator.model.ErrorResponse;
 import com.wotifgroup.swaggerstandalonegenerator.model.Operation;
 import com.wotifgroup.swaggerstandalonegenerator.model.Parameter;
 import com.wotifgroup.swaggerstandalonegenerator.model.ResourcePath;
@@ -179,6 +180,16 @@ public class SwaggerJsonWriter {
             }
             writer.writeEndArray();
         }
+
+        if (!operation.getErrorResponses().isEmpty()) {
+            writer.writeFieldName("errorResponses");
+            writer.writeStartArray();
+            for (ErrorResponse nextErrorResponse : operation.getErrorResponses()) {
+                write(writer, nextErrorResponse);
+            }
+            writer.writeEndArray();
+        }
+
         writer.writeEndObject();
     }
 
@@ -190,6 +201,13 @@ public class SwaggerJsonWriter {
         writer.writeStringField("dataType", parameter.getModelType().getId());
         writer.writeBooleanField("required", parameter.isRequired());
         writer.writeBooleanField("allowMultiple", parameter.isAllowMultiple());
+        writer.writeEndObject();
+    }
+
+    protected void write(JsonGenerator writer, ErrorResponse errorResponse) throws IOException {
+        writer.writeStartObject();
+        writer.writeNumberField("code", errorResponse.getStatusCode());
+        writer.writeStringField("reason", errorResponse.getReason());
         writer.writeEndObject();
     }
 

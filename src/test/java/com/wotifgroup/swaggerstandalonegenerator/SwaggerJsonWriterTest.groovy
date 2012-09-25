@@ -156,8 +156,8 @@ class SwaggerJsonWriterTest extends GroovyTestCase {
         assertEquals(404, responseJson.apis[0].operations[0].errorResponses[0].code)
         assertEquals("Resource Not Found", responseJson.apis[0].operations[0].errorResponses[0].reason)
 
-        assertEquals(400, responseJson.apis[0].operations[0].errorResponses[0].code)
-        assertEquals("Malformed request", responseJson.apis[0].operations[0].errorResponses[0].reason)
+        assertEquals(400, responseJson.apis[0].operations[0].errorResponses[1].code)
+        assertEquals("Malformed request", responseJson.apis[0].operations[0].errorResponses[1].reason)
     }
 
     void testOptionShouldReturnValueIfMatchingKey() {
