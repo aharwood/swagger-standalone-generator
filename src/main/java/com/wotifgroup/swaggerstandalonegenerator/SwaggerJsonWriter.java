@@ -9,14 +9,19 @@ import com.wotifgroup.swaggerstandalonegenerator.model.Operation;
 import com.wotifgroup.swaggerstandalonegenerator.model.Parameter;
 import com.wotifgroup.swaggerstandalonegenerator.model.ResourcePath;
 import com.wotifgroup.swaggerstandalonegenerator.model.Resource;
+import com.wotifgroup.swaggerstandalonegenerator.model.ValueType;
 import java.io.File;
 import java.io.IOException;
 import java.io.Writer;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -90,6 +95,13 @@ public class SwaggerJsonWriter {
                 write(writer, nextResourcePath, resource.getDescription());
             }
             writer.writeEndArray();
+
+            writer.writeFieldName("models");
+            writer.writeStartObject();
+            for (ValueType nextModel : resource.getModels()) {
+                write(writer, nextModel);
+            }
+            writer.writeEndObject();
 
             writer.writeEndObject();
         } catch (IOException e) {
@@ -208,6 +220,45 @@ public class SwaggerJsonWriter {
         writer.writeStartObject();
         writer.writeNumberField("code", errorResponse.getStatusCode());
         writer.writeStringField("reason", errorResponse.getReason());
+        writer.writeEndObject();
+    }
+
+    protected void write(JsonGenerator writer, ValueType model) throws IOException {
+        write(writer, model.getClazz());
+    }
+
+    protected void write(JsonGenerator writer, Class<?> clazz) throws IOException {
+        XmlRootElement rootElement = clazz.getAnnotation(XmlRootElement.class);
+        writer.writeFieldName(rootElement.name());
+        writer.writeStartObject();
+
+        writer.writeStringField("id", rootElement.name());
+        writer.writeFieldName("properties");
+        writer.writeStartObject();
+        for (Method nextMethod : clazz.getMethods()) {
+            if (nextMethod.isAnnotationPresent(XmlElement.class)) {
+                if (nextMethod.isAnnotationPresent(XmlElementWrapper.class)) {
+                    //has a wrapping element, so use that name
+                    writer.writeFieldName(nextMethod.getAnnotation(XmlElementWrapper.class).name());
+                } else {
+                    writer.writeFieldName(nextMethod.getAnnotation(XmlElement.class).name());
+                }
+                writer.writeStartObject();
+                ValueType valueType = ValueType.createFromReturnType(nextMethod);
+                writer.writeStringField("type", valueType.getModelId());
+
+                if (valueType.isMultiValue()) {
+                    writer.writeFieldName("items");
+                    writer.writeStartObject();
+                    writer.writeStringField("type", valueType.getType());
+                    writer.writeEndObject();
+                }
+
+                writer.writeEndObject();
+            }
+        }
+        writer.writeEndObject();
+
         writer.writeEndObject();
     }
 

@@ -86,31 +86,7 @@ public class JerseyToSwaggerAnnotationProcessor implements AnnotationProcessor {
      * @return Its response ValueType.
      */
     protected ValueType getResponseType(ApiOperation apiOperation) {
-        return getValueType(apiOperation.responseClass(), apiOperation.multiValueResponse());
-    }
-
-    protected ValueType getValueType(String id, boolean multiValue) {
-        Class<?> clazz = null;
-        PrimitiveType primitiveType = PrimitiveType.findBySwaggerId(id);
-        if (primitiveType != null) {
-            //primitive type
-            clazz = primitiveType.getClazz();
-        } else {
-            //must be a complex type
-            try {
-                clazz = ClassUtils.getClass(id);
-            } catch (ClassNotFoundException e) {
-                throw new IllegalArgumentException("Could not locate domain class: " + id);
-            }
-            //swagger spec is to lower camel case just the final portion of the class name
-            id = StringUtils.uncapitalize(ClassUtils.getShortClassName(clazz));
-        }
-
-        if (multiValue) {
-            id = "List[" + id + "]";
-        }
-
-        return new ValueType(id, clazz);
+        return ValueType.create(apiOperation.responseClass(), apiOperation.multiValueResponse());
     }
 
     protected Resource getResource(TypeDeclaration typeDeclaration) {

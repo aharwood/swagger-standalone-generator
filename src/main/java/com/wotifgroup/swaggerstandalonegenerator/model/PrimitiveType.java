@@ -26,6 +26,16 @@ public enum PrimitiveType {
         this.clazz = clazz;
     }
 
+    public static PrimitiveType findByClass(Class<?> clazz) {
+        for (PrimitiveType nextType : values()) {
+            if (nextType.getClazz().equals(clazz)) {
+                return nextType;
+            }
+        }
+
+        return null;
+    }
+
     public static PrimitiveType findBySwaggerId(String id) {
         for (PrimitiveType nextType : values()) {
             if (nextType.getSwaggerId().equals(id)) {

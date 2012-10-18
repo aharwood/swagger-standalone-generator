@@ -1,6 +1,5 @@
 package com.wotifgroup.swaggerstandalonegenerator;
 
-import com.wordnik.swagger.annotations.ApiProperty;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -32,7 +31,6 @@ public class ModelSample {
     }
 
     @XmlElement(name = "status")
-    @ApiProperty(value = "Model Status", allowableValues = "pending, accepted")
     public String getStatus() {
         return status;
     }
