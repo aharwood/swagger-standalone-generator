@@ -2,7 +2,10 @@ swagger-standalone-generator
 ============================
 
 A standalone Java annotation processor that generates Swagger json. This application is intended to be run as part
-of your Maven build, to produce swagger spec artifacts.
+of your Maven build, to produce artifacts consistent with v1.1 of the Swagger specification.
+
+The artifacts simplify version and release control of your APIs. Since this runs as a build plugin, it also avoids
+dragging in any of the Swagger dependencies to your project.
 
 Example usage:
 ```
