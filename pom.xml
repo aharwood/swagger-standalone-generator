@@ -8,6 +8,11 @@
     <artifactId>swagger-json-generator</artifactId>
     <version>2012.07.19</version>
 
+    <properties>
+        <maven.test.search.classdir>true</maven.test.search.classdir>
+        <gmaven.runtime>1.5</gmaven.runtime>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>com.wordnik</groupId>
@@ -49,5 +54,29 @@
             <version>4.10</version>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.gmaven</groupId>
+                <artifactId>gmaven-plugin</artifactId>
+                <version>1.4</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>testCompile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.codehaus.gmaven</groupId>
+                        <artifactId>gmaven-mojo</artifactId>
+                        <version>1.4</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
