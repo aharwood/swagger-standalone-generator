@@ -16,7 +16,7 @@ Example usage:
             <artifactId>apt-maven-plugin</artifactId>
             <version>1.0-alpha-5</version>
             <configuration>
-                <factory>com.wotifgroup.swaggerjsongenerator.SwaggerJsonGeneratorAPFactory</factory>
+                <factory>com.wotifgroup.swaggerstandalonegenerator.SwaggerJsonGeneratorAPFactory</factory>
                 <options>
                     <option>apiVersion=1.0</option>
                 </options>
