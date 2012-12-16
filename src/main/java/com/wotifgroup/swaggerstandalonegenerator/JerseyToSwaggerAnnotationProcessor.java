@@ -8,14 +8,13 @@ import com.sun.mirror.declaration.TypeDeclaration;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wotifgroup.swaggerstandalonegenerator.model.Operation;
-import com.wotifgroup.swaggerstandalonegenerator.model.PrimitiveType;
-import com.wotifgroup.swaggerstandalonegenerator.model.ResourcePath;
 import com.wotifgroup.swaggerstandalonegenerator.model.Resource;
+import com.wotifgroup.swaggerstandalonegenerator.model.ResourcePath;
 import com.wotifgroup.swaggerstandalonegenerator.model.ValueType;
 import java.util.Set;
 import javax.ws.rs.Path;
-import org.apache.commons.lang3.ClassUtils;
-import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The main AnnotationProcessor, which will parse over the jersey resources and use a SwaggerJsonWriter to
@@ -26,6 +25,7 @@ import org.apache.commons.lang3.StringUtils;
  * Time: 9:24 PM
  */
 public class JerseyToSwaggerAnnotationProcessor implements AnnotationProcessor {
+    private static final Logger LOGGER = LoggerFactory.getLogger(JerseyToSwaggerAnnotationProcessor.class);
 
     private Set<AnnotationTypeDeclaration> annotationTypeDeclarations;
     private AnnotationProcessorEnvironment annotationProcessorEnvironment;
@@ -40,13 +40,7 @@ public class JerseyToSwaggerAnnotationProcessor implements AnnotationProcessor {
         SwaggerJsonWriter writer = new SwaggerJsonWriter(this.annotationProcessorEnvironment);
 
         for (TypeDeclaration nextTypeDecl : this.annotationProcessorEnvironment.getTypeDeclarations()) {
-            Resource resource = getResource(nextTypeDecl);
-
-            for (MethodDeclaration nextMethod : nextTypeDecl.getMethods()) {
-                addOperation(resource, nextMethod);
-            }
-
-            writer.write(resource);
+            write(nextTypeDecl, writer);
         }
 
         writer.flushAndClose();
@@ -94,5 +88,20 @@ public class JerseyToSwaggerAnnotationProcessor implements AnnotationProcessor {
         Resource resource = new Resource(api.value(), api.description());
 
         return resource;
+    }
+
+    protected void write(TypeDeclaration typeDecl, SwaggerJsonWriter writer) {
+        Api api = typeDecl.getAnnotation(Api.class);
+
+        if (api != null) {
+            LOGGER.info("Building resource: " + typeDecl.getQualifiedName());
+
+            Resource resource = new Resource(api.value(), api.description());
+            for (MethodDeclaration nextMethod : typeDecl.getMethods()) {
+                addOperation(resource, nextMethod);
+            }
+
+            writer.write(resource);
+        }
     }
 }
